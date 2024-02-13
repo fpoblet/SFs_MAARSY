@@ -30,7 +30,7 @@ def cube(x):
 # months = [1,2,3,4,5,6,7,8,9,10,11,12]
 # dayssn = [31,28,31,30,31,30,31,31,30,31,30,31]
 
-year = [2022]
+year = [2021]
 months = [1,2,3,4,5,6,7,8,9,10,11,12]
 dayssn = [31,28,31,30,31,30,31,31,30,31,30,31]
 
@@ -45,17 +45,17 @@ U0, V0, WINDS, H, date_list =  extract_winds(ipath = path,
 
 
 # SAVE FILES
-with open('C:/Poblet/IAP/work/N-order_sf/data/date_list_2022.txt', 'w') as f:
+with open('C:/Poblet/IAP/work/N-order_sf/data/date_list_2021.txt', 'w') as f:
     f.write('\n'.join([date.strftime('%Y-%m-%d %H:%M:%S') for date in date_list]))
 
 
-np.save('C:/Poblet/IAP/work/N-order_sf/data/WIND2022.npy', WINDS)
+np.save('C:/Poblet/IAP/work/N-order_sf/data/WIND2021.npy', WINDS)
 np.save('C:/Poblet/IAP/work/N-order_sf/data/height.npy', H)
 
 
 # LOAD FILES
-date_list = [line.strip() for line in open('C:/Poblet/IAP/work/N-order_sf/data/date_list_2022.txt')]
-WINDS = np.load('C:/Poblet/IAP/work/N-order_sf/data/WIND2022.npy')
+date_list = [line.strip() for line in open('C:/Poblet/IAP/work/N-order_sf/data/date_list_2021.txt')]
+WINDS = np.load('C:/Poblet/IAP/work/N-order_sf/data/WIND2021.npy')
 H = np.load('C:/Poblet/IAP/work/N-order_sf/data/height.npy')
 
 
