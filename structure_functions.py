@@ -9,6 +9,10 @@ Routines to estimate structure functions from MAARSY winds
 import numpy as np
 
 # routines to estimate high-order structure functions
+
+
+
+
 def calculate_structure_function_q(wind_speed_data, q, max_tau):
     n = len(wind_speed_data)
     D_q = np.zeros(max_tau)
@@ -19,27 +23,60 @@ def calculate_structure_function_q(wind_speed_data, q, max_tau):
 
     return D_q
 
-def calculate_structure_function_q_loc(wind_speed_data, q, max_tau, Tau):
-    
+
+def calculate_structure_function_q_loc(wind_speed_data, q, max_tau, Tau):    
     n = len(wind_speed_data)
     Dq_loc_mean = np.empty(max_tau)*np.nan
-    Dq_loc_median = np.empty(max_tau)*np.nan
     r_loc_mean = np.empty(max_tau)*np.nan
-    r_loc_median = np.empty(max_tau)*np.nan
 
-    for tau in range(1, max_tau + 1):
-        v_avg = np.convolve(wind_speed_data, np.ones(tau)/tau, 'valid')     
+    for ntau in range(1, max_tau + 1):
+        v_avg = np.convolve(wind_speed_data, np.ones(ntau), 'valid')/ntau     
         
-        r_values = v_avg * Tau[tau-1]
+        r_values = v_avg * Tau[ntau-1]
         
-        delta_v_q = (wind_speed_data[:n - tau] - wind_speed_data[tau:]) ** q
+        delta_v_q = (wind_speed_data[:n - ntau] - wind_speed_data[ntau:]) ** q
 
-        Dq_loc_mean[tau-1] = np.nanmean(delta_v_q)
-        Dq_loc_median[tau-1] = np.nanmedian(delta_v_q)
-        r_loc_mean[tau-1] = np.nanmean(r_values)
-        r_loc_median[tau-1] = np.nanmedian(r_values)
+        Dq_loc_mean[ntau-1] = np.nanmean(delta_v_q)
+        r_loc_mean[ntau-1] = np.nanmean(r_values)
 
-    return Dq_loc_mean, Dq_loc_median, r_loc_mean, r_loc_median
+    return Dq_loc_mean, r_loc_mean
+
+
+def calculate_structure_function_q_loc_binned(wind_speed_data, q, max_tau, Tau, s_min, s_max, num_bins,median=False):    
+    n = len(wind_speed_data)
+    
+    bin_edges = np.logspace(np.log10(s_min), np.log10(s_max), num_bins + 1)    
+    
+    R_loc_binned = np.empty((len(bin_edges),max_tau))*np.nan
+    Rcount_loc_binned = np.empty((len(bin_edges),max_tau))*np.nan
+    DQ_loc_binned = np.empty((len(bin_edges),max_tau))*np.nan
+
+    for ntau in range(1, max_tau + 1):
+        # print(ntau)
+        v_avg = np.convolve(wind_speed_data, np.ones(ntau)/ntau, 'valid')     
+        
+        r_values = v_avg[:-1] * Tau[ntau-1] # check[:-1], only there to match dimensions with delta_v_q
+        delta_v_q = (wind_speed_data[:n - ntau] - wind_speed_data[ntau:]) ** q
+           
+        # print(min(r_values/1000),max(r_values/1000))
+        # print(delta_v_q.shape)
+        # print(len(r_values))
+        
+        for b in range(num_bins):
+            ib = np.where((r_values >= bin_edges[b]) & (r_values < bin_edges[b + 1]))
+            # print(len(ib[0]))
+            
+            if median:
+                R_loc_binned[b,ntau-1] = np.nanmedian(r_values[ib])
+                Rcount_loc_binned[b,ntau-1] = len(ib[0])
+                DQ_loc_binned[b,ntau-1] = np.nanmedian(delta_v_q[ib])
+            else:
+                R_loc_binned[b,ntau-1] = np.nanmean(r_values[ib])
+                Rcount_loc_binned[b,ntau-1] = len(ib[0])
+                DQ_loc_binned[b,ntau-1] = np.nanmean(delta_v_q[ib])
+
+    return DQ_loc_binned, R_loc_binned, Rcount_loc_binned
+
 
 
 # def calculate_structure_function_q_loc(wind_speed_data, q, max_tau):
