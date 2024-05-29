@@ -22,7 +22,7 @@ def find_common_elements_positions(seq1, seq2):
     positions = [seq2.index(dt) for dt in seq1 if dt in seq2]
     return positions
 
-def extract_winds(ipath, year, month, time_sequence, component=2):
+def extract_winds(ipath, year, month, time_sequence):
     # U0 = []
     # V0 = []
     # U0mod = []
@@ -45,16 +45,8 @@ def extract_winds(ipath, year, month, time_sequence, component=2):
                         u = np.array(f.get('wind/u'))
                         v = np.array(f.get('wind/v'))
                         w = np.array(f.get('wind/w'))
-                                                
-                        # if component == 0:
-                        #     comp = u
-                        # elif component == 1:
-                        #     comp = v
-                        # elif component == 2:
-                        #     comp = np.sqrt(u**2 + v**2)
-                        # elif component == 3:
-                        #     comp = np.sqrt(u**2 + v**2 + w**2)
-                        
+                                               
+                       
                         datenum = np.squeeze(f.get('info/datenums/'))
                         hours = np.squeeze(f.get('info/hour/')).astype(int)
                         mins = np.squeeze(f.get('info/min/')).astype(int)
@@ -155,8 +147,7 @@ path = 'C:/Poblet/IAP/work/N-order_sf/MAARSY/'
 U0, V0, U0mod, H =  extract_winds(ipath = path,
                                   year = year,
                                   month = months,
-                                  time_sequence = time_sequence,
-                                  component = 2) # 0: zonal, 1:meridional, 2:horizontal absolute value, 3: full amplitude
+                                  time_sequence = time_sequence) 
 
 ####################################################################################################
 # REDUCE THE RESOLUTION TO 15-min to work with smaller arrays and lists

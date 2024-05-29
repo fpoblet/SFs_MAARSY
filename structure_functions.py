@@ -17,8 +17,11 @@ def calculate_structure_function_q(wind_speed_data, q, max_tau):
     n = len(wind_speed_data)
     D_q = np.zeros(max_tau)
 
-    for tau in range(1, max_tau + 1):               
+    for tau in range(1, max_tau + 1):
+        # This is u(t)-u(t+tau) as in Sim et. al., (2023). For odd q this might give a different results than u(t+tau)-u(t)               
         delta_v = wind_speed_data[:n - tau] - wind_speed_data[tau:]
+        
+      
         D_q[tau - 1] = np.nanmean(delta_v ** q)
 
     return D_q
@@ -34,6 +37,7 @@ def calculate_structure_function_q_loc(wind_speed_data, q, max_tau, Tau):
         
         r_values = v_avg * Tau[ntau-1]
         
+        # This is (u(t)-u(t+tau))^q as in Sim et. al., (2023). For odd q this might give a different results than (u(t+tau)-u(t))^q
         delta_v_q = (wind_speed_data[:n - ntau] - wind_speed_data[ntau:]) ** q
 
         Dq_loc_mean[ntau-1] = np.nanmean(delta_v_q)
@@ -50,17 +54,27 @@ def calculate_structure_function_q_loc_binned(wind_speed_data, q, max_tau, Tau, 
     R_loc_binned = np.empty((len(bin_edges),max_tau))*np.nan
     Rcount_loc_binned = np.empty((len(bin_edges),max_tau))*np.nan
     DQ_loc_binned = np.empty((len(bin_edges),max_tau))*np.nan
+
     vmncount_loc_binned = []
 
     for ntau in range(1, max_tau + 1):
         # print(ntau)
-        # v_avg = np.convolve(wind_speed_data, np.ones(ntau)/ntau, mode='valid')     
         v_avg = (1/ntau)*np.convolve(wind_speed_data, np.ones(ntau), mode='valid')     
+        # v_avg = (1/ntau)*np.convolve(wind_speed_data, np.ones(2*ntau), mode='valid')     # For multitme SFs
         
         r_values = v_avg[:-1] * Tau[ntau-1] # check [:-1] or [1:] : only there to match dimensions with delta_v_q --> no afecta en nada
         # r_values = v_avg[1:] * Tau[ntau-1] 
-        delta_v_q = (wind_speed_data[:n - ntau] - wind_speed_data[ntau:]) ** q
-           
+        
+        # # This is (u(t)-u(t+tau))^q as in Sim et. al., (2023). For odd q this might give a different results than (u(t+tau)-u(t))^q
+        # delta_v_q = (wind_speed_data[:n - ntau] - wind_speed_data[ntau:]) ** q 
+        
+        # # The other case -> does not change anything for even q, checked.
+        # delta_v_q = (wind_speed_data[ntau:] - wind_speed_data[:n - ntau]) ** q 
+        # # print(len(r_values),delta_v_q.shape) # These dimensons should be the same for this case
+        
+        # # # Testing multitime SFs - see Cho (2019) and Angriman et. al., (2022) 
+        # delta_v_q = (wind_speed_data[(2*ntau):] - 2*wind_speed_data[ntau:(n-ntau)] + wind_speed_data[:n - 2*ntau] ) ** q  # 3 times
+
         vmncount_loc_binned.append(v_avg)
         
         # print(min(v_avg),max(v_avg))

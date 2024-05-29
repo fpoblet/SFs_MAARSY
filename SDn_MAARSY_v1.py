@@ -227,8 +227,8 @@ def third_order_spatial_SFs():
 # Call functions that calculate SFs
 #####################################################################################################
 
-# ihs =  np.squeeze(np.where((H>=5) & (H<15)))
-ihs =  np.squeeze(np.where((H>=8.5) & (H<12.1)))
+ihs =  np.squeeze(np.where((H>=5) & (H<15)))
+# ihs =  np.squeeze(np.where((H>=8.5) & (H<12.1)))
 q = 2 # order of the SFs
 
 row = 0
@@ -403,21 +403,21 @@ for ih in range(len(ihs)):
     plt.grid()
     plt.legend()
     
-#     # Save the current figure
-#     # filename = "C:/Poblet/IAP/work/N-order_sf/figuritas/v_1/single_heights_2019-2022/D2/mean/D2_s_MAARSY{:02d}.jpg".format(ih)
-#     filename = "C:/Poblet/IAP/work/N-order_sf/figuritas/v_2/v_2_15min_res_2019-2022/without_fits/D2_s_MAARSY{:02d}.jpg".format(ih)
-#     plt.savefig(filename, dpi=400)
-#     filenames.append(filename)
+    # Save the current figure
+    # filename = "C:/Poblet/IAP/work/N-order_sf/figuritas/v_1/single_heights_2019-2022/D2/mean/D2_s_MAARSY{:02d}.jpg".format(ih)
+    filename = "C:/Poblet/IAP/work/N-order_sf/figuritas/v_2/v_2_15min_res_2019-2022/without_fits_3points/D2_s_MAARSY{:02d}.jpg".format(ih)
+    plt.savefig(filename, dpi=400)
+    filenames.append(filename)
 
-#     # Close the figure to avoid displaying all figures
-#     plt.close()
+    # Close the figure to avoid displaying all figures
+    plt.close()
 
 
-# # Create a GIF from saved images
-# with imageio.get_writer('C:/Poblet/IAP/work/N-order_sf/figuritas/v_2/v_2_15min_res_2019-2022/without_fits/figures.gif', mode='I', duration=0.5) as writer:
-#     for filename in filenames:
-#         image = imageio.imread(filename)
-#         writer.append_data(image)
+# Create a GIF from saved images
+with imageio.get_writer('C:/Poblet/IAP/work/N-order_sf/figuritas/v_2/v_2_15min_res_2019-2022/without_fits_3points/figures.gif', mode='I', duration=0.5) as writer:
+    for filename in filenames:
+        image = imageio.imread(filename)
+        writer.append_data(image)
 
 
 
