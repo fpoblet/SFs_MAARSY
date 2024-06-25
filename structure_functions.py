@@ -52,7 +52,7 @@ def calculate_structure_function_q_loc_binned(wind_speed_data, q, max_tau, Tau, 
     bin_edges = np.logspace(np.log10(s_min), np.log10(s_max), num_bins + 1)    
     
     R_loc_binned = np.empty((len(bin_edges),max_tau))*np.nan
-    Rcount_loc_binned = np.empty((len(bin_edges),max_tau))*np.nan
+    Rcount_loc_binned = np.zeros((len(bin_edges),max_tau))
     DQ_loc_binned = np.empty((len(bin_edges),max_tau))*np.nan
 
     vmncount_loc_binned = []
@@ -66,7 +66,7 @@ def calculate_structure_function_q_loc_binned(wind_speed_data, q, max_tau, Tau, 
         # r_values = v_avg[1:] * Tau[ntau-1] 
         
         # # This is (u(t)-u(t+tau))^q as in Sim et. al., (2023). For odd q this might give a different results than (u(t+tau)-u(t))^q
-        # delta_v_q = (wind_speed_data[:n - ntau] - wind_speed_data[ntau:]) ** q 
+        delta_v_q = (wind_speed_data[:n - ntau] - wind_speed_data[ntau:]) ** q 
         
         # # The other case -> does not change anything for even q, checked.
         # delta_v_q = (wind_speed_data[ntau:] - wind_speed_data[:n - ntau]) ** q 
