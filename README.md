@@ -1,9 +1,16 @@
-The codes provided here use the Taylor approximation to calculate spatial high-order structure functions (SFs) of horizontal winds from a time sequences of measurements in the troposphere/stratosphere. The data are measured with a powerful VHF radar on the North-Norwegian island of Andøya (69.30°N, 16.04°E). The radar name is Middle Atmosphere Alomar Radar System (MAARSY).
+## Project Overview
 
-More information about the radar can be found at: 
+This repository contains code that uses the Taylor approximation to calculate spatial high-order structure functions (SFs) of horizontal winds from time sequences of measurements in the troposphere and stratosphere. The data are collected using a powerful VHF radar located on the North-Norwegian island of Andøya (69.30°N, 16.04°E). The radar system used is the Middle Atmosphere Alomar Radar System (MAARSY).
 
-https://www.iap-kborn.de/en/research/department-radar-remote-sensing/instruments/mst-radars/maarsy/
+## About the Radar
 
-https://doi.org/10.1029/2011RS004775
+MAARSY is a state-of-the-art radar system designed for atmospheric research. More detailed information about the radar can be found at the following links:
 
-https://doi.org/10.5194/ars-11-283-2013
+- [MAARSY Information](https://www.iap-kborn.de/en/research/department-radar-remote-sensing/instruments/mst-radars/maarsy/)
+- [Research Article 1](https://doi.org/10.1029/2011RS004775)
+- [Research Article 2](https://doi.org/10.5194/ars-11-283-2013)
+
+
+## Contact
+
+For any questions or further information, please contact Facundo L. Poblet at poblet@iap-kborn.de.
