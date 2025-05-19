@@ -10,6 +10,8 @@ MAARSY is a state-of-the-art radar system designed for atmospheric research. Mor
 - [Research Article 1](https://doi.org/10.1029/2011RS004775)
 - [Research Article 2](https://doi.org/10.5194/ars-11-283-2013)
 
+## Results
+The results of this analysis were published in 2025 in a Geophysical Research Letters paper. You can access the publication here: https://doi.org/10.1029/2025GL114927
 
 ## Contact
 
