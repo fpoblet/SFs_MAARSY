@@ -15,4 +15,4 @@ The results of this analysis were published in 2025 in a Geophysical Research Le
 
 ## Contact
 
-For any questions or further information, please contact Facundo L. Poblet at poblet@iap-kborn.de.
+For any questions or further information, please contact Facundo L. Poblet at facundopoblet@gmail.com.
